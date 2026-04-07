@@ -1,9 +1,11 @@
 ![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
 
-# n8n (Enterprise Unlocked Fork)
+# n8n (Enterprise Unlock Fork)
 
-> **This is a customized fork with all enterprise features unlocked.**
-> Modified `packages/cli/src/license.ts` to bypass license checks and enable unlimited quotas.
+> **엔터프라이즈 기능이 활성화된 커스텀 포크입니다.**
+> `packages/cli/src/license.ts`를 수정하여 라이선스 체크를 우회하고 모든 quota를 무제한으로 설정했습니다.
+>
+> **:warning: GitHub의 "Sync fork" 버튼을 절대 누르지 마세요!** 수정사항이 upstream으로 덮어씌워져 사라집니다.
 
 n8n is a workflow automation platform that gives technical teams the flexibility of code with the speed of no-code. With 400+ integrations, native AI capabilities, and a fair-code license, n8n lets you build powerful automations while maintaining full control over your data and deployments.
 
