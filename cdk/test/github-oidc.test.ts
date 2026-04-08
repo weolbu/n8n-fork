@@ -75,7 +75,7 @@ test('grants ECR GetAuthorizationToken', () => {
   });
 });
 
-test('grants ECS deploy permissions', () => {
+test('grants ECS service permissions scoped to cluster and service', () => {
   template.hasResourceProperties('AWS::IAM::Policy', {
     PolicyDocument: {
       Statement: Match.arrayWith([
@@ -83,10 +83,25 @@ test('grants ECS deploy permissions', () => {
           Action: Match.arrayWith([
             'ecs:UpdateService',
             'ecs:DescribeServices',
+          ]),
+          Effect: 'Allow',
+        }),
+      ]),
+    },
+  });
+});
+
+test('grants ECS task definition permissions with wildcard resource', () => {
+  template.hasResourceProperties('AWS::IAM::Policy', {
+    PolicyDocument: {
+      Statement: Match.arrayWith([
+        Match.objectLike({
+          Action: Match.arrayWith([
             'ecs:DescribeTaskDefinition',
             'ecs:RegisterTaskDefinition',
           ]),
           Effect: 'Allow',
+          Resource: '*',
         }),
       ]),
     },

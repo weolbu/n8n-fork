@@ -61,15 +61,20 @@ export class GitHubOidcConstruct extends Construct {
       actions: [
         'ecs:UpdateService',
         'ecs:DescribeServices',
-        'ecs:DescribeTaskDefinition',
-        'ecs:RegisterTaskDefinition',
       ],
       resources: [
         props.ecsClusterArn,
         props.ecsServiceArn,
-        `arn:aws:ecs:${region}:${account}:task-definition/weolbu-n8n:*`,
-        `arn:aws:ecs:${region}:${account}:task-definition/weolbu-n8n`,
       ],
+    }));
+
+    this.deployRole.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'ecs:DescribeTaskDefinition',
+        'ecs:RegisterTaskDefinition',
+      ],
+      resources: ['*'],
     }));
 
     this.deployRole.addToPolicy(new iam.PolicyStatement({
