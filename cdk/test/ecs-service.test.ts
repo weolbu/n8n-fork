@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
+import * as ecr from 'aws-cdk-lib/aws-ecr';
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import { Template, Match } from 'aws-cdk-lib/assertions';
 import { EcsServiceConstruct } from '../lib/constructs/ecs-service';
@@ -22,6 +23,9 @@ beforeAll(() => {
     protocol: elbv2.ApplicationProtocol.HTTP,
     targetType: elbv2.TargetType.IP,
   });
+  const ecrRepository = new ecr.Repository(stack, 'TestEcr', {
+    repositoryName: 'weolbu/n8n',
+  });
 
   new EcsServiceConstruct(stack, 'EcsService', {
     vpc,
@@ -30,6 +34,8 @@ beforeAll(() => {
     targetGroup,
     rdsEndpoint: 'test-db.example.com',
     domainName: 'n8n2.weolbu.com',
+    ecrRepository,
+    imageTag: 'v2.16.0-weolbu.1',
   });
 
   template = Template.fromStack(stack);
@@ -51,11 +57,10 @@ test('creates task definition with correct CPU and memory', () => {
   });
 });
 
-test('creates container with n8n image and port 5678', () => {
+test('creates container with ECR image and port 5678', () => {
   template.hasResourceProperties('AWS::ECS::TaskDefinition', {
     ContainerDefinitions: Match.arrayWith([
       Match.objectLike({
-        Image: 'n8nio/n8n:1.123.28',
         PortMappings: Match.arrayWith([
           Match.objectLike({ ContainerPort: 5678 }),
         ]),

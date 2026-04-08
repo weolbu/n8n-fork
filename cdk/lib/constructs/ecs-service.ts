@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
+import * as ecr from 'aws-cdk-lib/aws-ecr';
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as iam from 'aws-cdk-lib/aws-iam';
@@ -14,6 +15,8 @@ export interface EcsServiceConstructProps {
   targetGroup: elbv2.IApplicationTargetGroup;
   rdsEndpoint: string;
   domainName: string;
+  ecrRepository: ecr.IRepository;
+  imageTag: string;
 }
 
 export class EcsServiceConstruct extends Construct {
@@ -62,10 +65,11 @@ export class EcsServiceConstruct extends Construct {
     // Grant read access to execution role
     encryptionKey.grantRead(executionRole);
     dbPassword.grantRead(executionRole);
+    props.ecrRepository.grantPull(executionRole);
 
     // Container
     taskDefinition.addContainer('N8nContainer', {
-      image: ecs.ContainerImage.fromRegistry('n8nio/n8n:1.123.28'),
+      image: ecs.ContainerImage.fromEcrRepository(props.ecrRepository, props.imageTag),
       containerName: 'n8n',
       portMappings: [{ containerPort: 5678 }],
       logging: ecs.LogDrivers.awsLogs({
