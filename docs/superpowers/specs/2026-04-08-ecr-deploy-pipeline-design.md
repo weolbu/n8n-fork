@@ -132,8 +132,7 @@ image: ecs.ContainerImage.fromEcrRepository(ecrRepository, imageTag)
   - 태스크 정의의 새 revision을 등록해야 ECS가 새 이미지를 pull함
   - 배포 후 `aws ecs wait services-stable`로 안정화 대기
 - **GitHub Secrets 필요**:
-  - `AWS_ACCOUNT_ID`
-  - `AWS_DEPLOY_ROLE_ARN`
+  - `AWS_DEPLOY_ROLE_ARN` (CDK 배포 후 output에서 확인)
 
 ## 버전 태그 전략
 
