@@ -61,6 +61,13 @@ test('creates container with ECR image and port 5678', () => {
   template.hasResourceProperties('AWS::ECS::TaskDefinition', {
     ContainerDefinitions: Match.arrayWith([
       Match.objectLike({
+        Image: {
+          'Fn::Join': Match.arrayWith([
+            Match.arrayWith([
+              Match.stringLikeRegexp('dkr\\.ecr'),
+            ]),
+          ]),
+        },
         PortMappings: Match.arrayWith([
           Match.objectLike({ ContainerPort: 5678 }),
         ]),
