@@ -1,0 +1,18 @@
+{
+  "app": "npx ts-node --prefer-ts-exts bin/app.ts",
+  "context": {
+    "vpcId": "vpc-0020001e2f75138b5",
+    "ecsClusterName": "weolbu-prod-cluster",
+    "acmCertificateArn": "arn:aws:acm:ap-northeast-2:299743443000:certificate/66546fe2-ac22-4157-a9e3-c9e9ab0fae0c",
+    "hostedZoneId": "Z0608838CYLEF2I2BCIS",
+    "hostedZoneName": "weolbu.com",
+    "domainName": "n8n.weolbu.com",
+    "rdsEndpoint": "redash-prod.ccddem2fvgjp.ap-northeast-2.rds.amazonaws.com",
+    "rdsSecurityGroupId": "sg-06ffd1a365847c1f9",
+    "allowedCidrs": [
+      "221.151.188.17/32",
+      "13.124.43.252/32",
+      "3.36.140.52/32"
+    ]
+  }
+}
