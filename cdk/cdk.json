@@ -11,7 +11,6 @@
     "rdsSecurityGroupId": "sg-06ffd1a365847c1f9",
     "allowedCidrs": [
       "221.151.188.17/32",
-      "13.124.43.252/32",
       "3.36.140.52/32"
     ],
     "ecrRepositoryName": "weolbu/n8n",
